@@ -1,0 +1,57 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.9'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'maven-publish' // ★ 1. 배포를 위한 핵심 플러그인 추가!
+}
+
+group = 'com.github.imkh817'
+version = '0.0.1-SNAPSHOT'
+description = 'Distributed Lock Library'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+bootJar{
+	enabled = false
+}
+
+jar{
+	enabled = true
+	archiveClassifier = ''
+}
+
+dependencies {
+	implementation 'org.redisson:redisson-spring-boot-starter:3.30.0'
+	implementation 'org.springframework.boot:spring-boot-starter-aop' // 핵심!
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+// ★ 4. 배포 설정 (Maven Local 등에 올리기 위함)
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from components.java
+		}
+	}
+}
