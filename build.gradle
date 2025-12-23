@@ -56,19 +56,21 @@ publishing {
 	}
 }
 
-afterEvaluate {
-	publishing {
-		publications {
-			register<MavenPublication>("release") {
-				from(components["release"])
-				groupId = "com.github.imkh817"
-				artifactId = "distributed-lock-library"
-				version = "1.0.3"
+publishing {
+	publications {
+		// 'release'는 그냥 배포 설정의 이름이야. (마음대로 지어도 됨)
+		release(MavenPublication) {
+			// ⭐️ 핵심 변경: 안드로이드가 아니면 'components.java'를 써야 해!
+			from components.java
 
-				pom {
-					name.set("distributed_lock")
-					description.set("distributed_lock_lib")
-				}
+			groupId = 'com.github.imkh817'
+			artifactId = 'distributed-lock-library'
+			version = '1.0.3'
+
+			// POM 설정 (Groovy 스타일)
+			pom {
+				name = 'distributed_lock'
+				description = 'distributed_lock_lib'
 			}
 		}
 	}
