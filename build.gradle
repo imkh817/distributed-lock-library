@@ -65,7 +65,7 @@ publishing {
 
 			groupId = 'com.github.imkh817'
 			artifactId = 'distributed-lock-library'
-			version = '1.0.3'
+			version = '1.0.4'
 
 			// POM 설정 (Groovy 스타일)
 			pom {
