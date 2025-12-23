@@ -55,3 +55,21 @@ publishing {
 		}
 	}
 }
+
+afterEvaluate {
+	publishing {
+		publications {
+			register<MavenPublication>("release") {
+				from(components["release"])
+				groupId = "com.github.imkh817"
+				artifactId = "distributed-lock-library"
+				version = "1.0.3"
+
+				pom {
+					name.set("distributed_lock")
+					description.set("distributed_lock_lib")
+				}
+			}
+		}
+	}
+}
